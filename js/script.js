@@ -394,10 +394,149 @@ navLinks.addEventListener("click", () => {
   menuToggle.setAttribute("aria-expanded", "false");
 });
 
+const heroVideoOverlay = document.querySelector("#heroVideoOverlay");
+const storyPlayer = document.querySelector("#storyPlayer");
+const storyKicker = document.querySelector("#storyKicker");
+const storyText = document.querySelector("#storyText");
+const storyProgress = document.querySelector("#storyProgress");
+const storyControl = document.querySelector("#storyControl");
+const storySound = document.querySelector("#storySound");
+const storyAudioStatus = document.querySelector("#storyAudioStatus");
+const storyCopy = document.querySelector(".story-copy");
+
+const storyScenes = [
+  ["الدرس متراكم", "جلس قدّام الكتب وما عرفش منين يبدا."],
+  ["الإشعارات", "كل مرة كيهزّ التيليفون، كيطير عليه التركيز."],
+  ["صعوبة التركيز", "كيعاود نفس السطر، وما قادرش يستوعب."],
+  ["خوف الامتحان", "الوقت كيدوز، والامتحان قرّب وهو مازال قلقان."],
+  ["شاف ESEF", "وسط هاد الضغط، بان ليه فتيليفونو: ESEF، مهارات الدراسة والتحصيل."]
+];
+let storyIndex = 0;
+let storyElapsed = 0;
+let storyPlaying = true;
+let storyCompleted = false;
+let storyTimer = null;
+let storyMusicEnabled = true;
+const sceneDuration = 7600;
+const storyMusic = document.querySelector("#storyMusic");
+storyMusic.volume = 0.3;
+
+function playStoryMusic() {
+  const playback = storyMusic.play();
+  if (playback && typeof playback.catch === "function") {
+    playback.catch(() => {
+      storyAudioStatus.textContent = "تعذّر تشغيل الموسيقى. جرّب زر الصوت مرة أخرى.";
+    });
+  }
+}
+
+function renderStoryScene() {
+  storyPlayer.className = `story-player scene-${["one", "two", "three", "four", "five"][storyIndex]}`;
+  storyKicker.textContent = storyScenes[storyIndex][0];
+  storyText.textContent = storyScenes[storyIndex][1];
+  storyElapsed = 0;
+  storyCopy.classList.remove("scene-enter");
+  storyPlayer.classList.remove("scene-impact");
+  void storyCopy.offsetWidth;
+  void storyPlayer.offsetWidth;
+  storyCopy.classList.add("scene-enter");
+  storyPlayer.classList.add("scene-impact");
+}
+
+function stopStory() {
+  storyPlaying = false;
+  window.clearInterval(storyTimer);
+  storyTimer = null;
+  storyMusic.pause();
+  storyPlayer.classList.add("paused");
+  storyControl.textContent = "تشغيل";
+  storyControl.setAttribute("aria-label", "تشغيل الفيديو");
+}
+
+function startStory() {
+  if (storyCompleted) {
+    storyCompleted = false;
+    storyIndex = 0;
+    storyProgress.style.width = "0";
+    storyMusic.currentTime = 0;
+    renderStoryScene();
+  }
+  storyPlaying = true;
+  storyPlayer.classList.remove("paused");
+  if (storyMusicEnabled) playStoryMusic();
+  storyControl.textContent = "إيقاف";
+  storyControl.setAttribute("aria-label", "إيقاف الفيديو");
+  window.clearInterval(storyTimer);
+  storyTimer = window.setInterval(() => {
+    if (!storyPlaying) return;
+    storyElapsed += 100;
+    const progress = ((storyIndex * sceneDuration + storyElapsed) / (storyScenes.length * sceneDuration)) * 100;
+    storyProgress.style.width = `${progress}%`;
+    if (storyElapsed >= sceneDuration) {
+      if (storyIndex === storyScenes.length - 1) {
+        storyProgress.style.width = "100%";
+        storyCompleted = true;
+        stopStory();
+        storyControl.textContent = "إعادة";
+        storyControl.setAttribute("aria-label", "إعادة الفيديو من البداية");
+        storyAudioStatus.textContent = "سالات القصة؛ اضغط إعادة إلا بغيتي تشوفها من الأول.";
+      } else {
+        storyIndex += 1;
+        renderStoryScene();
+      }
+    }
+  }, 100);
+}
+
+function openHeroVideo() {
+  heroVideoOverlay.classList.add("open");
+  heroVideoOverlay.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  document.querySelector("#closeHeroVideo").focus();
+  storyIndex = 0;
+  storyCompleted = false;
+  storyProgress.style.width = "0";
+  storyMusic.currentTime = 0;
+  renderStoryScene();
+  startStory();
+  if (!storyMusicEnabled) storyAudioStatus.textContent = "الموسيقى مطفأة؛ شغّلها من الزر إذا بغيتي.";
+}
+
+function closeHeroVideo() {
+  stopStory();
+  storyMusic.currentTime = 0;
+  heroVideoOverlay.classList.remove("open");
+  heroVideoOverlay.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+document.querySelector("#openHeroVideo").addEventListener("click", openHeroVideo);
+document.querySelector("#closeHeroVideo").addEventListener("click", closeHeroVideo);
+heroVideoOverlay.addEventListener("click", event => {
+  if (event.target === heroVideoOverlay) closeHeroVideo();
+});
+storyControl.addEventListener("click", () => {
+  if (storyPlaying) stopStory();
+  else startStory();
+});
+storySound.addEventListener("click", () => {
+  storyMusicEnabled = !storyMusicEnabled;
+  storySound.textContent = storyMusicEnabled ? "🔊 كتم الموسيقى" : "🔇 تشغيل الموسيقى";
+  storySound.setAttribute("aria-pressed", String(storyMusicEnabled));
+  if (!storyMusicEnabled) {
+    storyMusic.pause();
+    storyAudioStatus.textContent = "تم إيقاف الموسيقى.";
+  } else if (storyPlaying) {
+    playStoryMusic();
+  } else {
+    storyAudioStatus.textContent = "اضغط تشغيل لسماع الموسيقى.";
+  }
+});
 document.addEventListener("keydown", event => {
   if (event.key !== "Escape") return;
   if (searchOverlay.classList.contains("open")) closeSearch();
   if (lessonOverlay.classList.contains("open")) document.querySelector("#closeLesson").click();
+  if (heroVideoOverlay.classList.contains("open")) closeHeroVideo();
 });
 
 const revealElements = document.querySelectorAll(".reveal");

@@ -75,6 +75,10 @@
               </div>
             </div>
           </div>
+          <button class="hero-video-button" id="openHeroVideo" type="button" aria-haspopup="dialog">
+            <span class="play-icon" aria-hidden="true">▶</span>
+            <span>شاهد مقدمة التعلم</span>
+          </button>
         </div>
       </div>
     </section>
@@ -200,6 +204,129 @@
       <main class="drawer-content" id="drawerContent"></main>
       <button class="drawer-close" id="closeLesson" type="button" aria-label="إغلاق الدرس">×</button>
       <div class="reading-progress" id="readingProgress"></div>
+    </div>
+  </div>
+
+  <div class="video-overlay" id="heroVideoOverlay" role="dialog" aria-modal="true" aria-labelledby="heroVideoTitle" aria-hidden="true">
+    <div class="video-modal">
+      <button class="video-close" id="closeHeroVideo" type="button" aria-label="إغلاق الفيديو">×</button>
+      <h2 id="heroVideoTitle">مقدمة مهارات الدراسة والتحصيل</h2>
+      <div class="story-player" id="storyPlayer">
+        <div class="story-grid" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="story-trails" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="story-clock" aria-hidden="true"><i></i><i></i><b>!</b></div>
+        <div class="story-phone" aria-hidden="true">
+          <div class="phone-screen">
+            <span class="phone-brand">ESEF</span>
+            <strong>مهارات الدراسة والتحصيل</strong>
+          </div>
+          <span class="phone-badge">3</span>
+          <i></i>
+        </div>
+        <div class="story-sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="story-letter" aria-hidden="true">الامتحان غدا</div>
+        <div class="story-character" aria-hidden="true">
+          <svg class="character-art" viewBox="0 0 260 500" preserveAspectRatio="xMidYMax meet" focusable="false">
+            <defs>
+              <linearGradient id="jacketShade" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#505050"/>
+                <stop offset=".58" stop-color="#292929"/>
+                <stop offset="1" stop-color="#101010"/>
+              </linearGradient>
+              <linearGradient id="pantsShade" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#373737"/>
+                <stop offset=".52" stop-color="#1b1b1b"/>
+                <stop offset="1" stop-color="#080808"/>
+              </linearGradient>
+              <linearGradient id="shoeShade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#555"/>
+                <stop offset=".7" stop-color="#171717"/>
+                <stop offset="1" stop-color="#050505"/>
+              </linearGradient>
+              <linearGradient id="hairShade" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#4c4c4c"/>
+                <stop offset="1" stop-color="#111"/>
+              </linearGradient>
+              <linearGradient id="skinShade" x1="0" y1="0" x2=".8" y2="1">
+                <stop offset="0" stop-color="#f2f2f2"/>
+                <stop offset=".58" stop-color="#d0d0d0"/>
+                <stop offset="1" stop-color="#a8a8a8"/>
+              </linearGradient>
+              <linearGradient id="shirtShade" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f6f6f6"/>
+                <stop offset="1" stop-color="#929292"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="130" cy="482" rx="55" ry="10" fill="#111" opacity=".24"/>
+            <g class="character-coat" fill="url(#jacketShade)" stroke="#111" stroke-width="3" stroke-linejoin="round">
+              <path d="M88 145q-19 4-25 27l-10 88 1 137q20 13 43 7l19-130h28l19 130q23 6 43-7l1-137-10-88q-6-23-25-27l-16 120h-52z"/>
+              <path d="M69 287 67 391m124-104 2 104" fill="none" stroke="#aaa" stroke-width="3"/>
+            </g>
+            <g class="character-legs">
+              <g class="character-leg character-leg-left">
+                <path d="M101 266q14 5 31 1l-5 78-6 79-31 2-1-82-9-56z" fill="url(#pantsShade)" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+                <path d="m101 286-3 72m27-70-7 58m-22-17 19 4" fill="none" stroke="#777" stroke-width="2" opacity=".6" stroke-linecap="round"/>
+                <path d="m91 414 31-2 7 28-8 9-51 1q-6-9 4-18z" fill="url(#shoeShade)" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+                <path d="m76 440 48-1" stroke="#777" stroke-width="3" stroke-linecap="round"/>
+                <path d="m96 423 8 4m-5 2 8 4m-5-13 8 4" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round"/>
+              </g>
+              <g class="character-leg character-leg-right">
+                <path d="M132 267q17 4 31-3l11 67-8 81-30 4-4-78-11-40z" fill="url(#pantsShade)" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+                <path d="m138 286 5 65m22-65-5 65m-23-18 17 4" fill="none" stroke="#777" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+                <path d="m137 413 30-1 14 23q2 9-9 13l-48-4-4-12z" fill="url(#shoeShade)" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+                <path d="m126 438 52 5" stroke="#777" stroke-width="3" stroke-linecap="round"/>
+                <path d="m137 423 8 5m-4-10 8 5m2 8 8 5" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round"/>
+              </g>
+            </g>
+            <g class="character-arm character-arm-left">
+              <path d="M87 147q-22 2-29 26l-31 76q-7 18 9 26 15 7 24-10l44-78z" fill="url(#jacketShade)" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+              <path d="m32 240-13 30q-5 13 6 19 11 5 18-7l13-27z" fill="#bdbdbd" stroke="#111" stroke-width="3"/>
+              <path d="M24 276q-3 10 5 14 8 4 14-5" fill="none" stroke="#333" stroke-width="2"/>
+              <path d="m65 178-12 45m24-47-10 34" fill="none" stroke="#aaa" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+            </g>
+            <g class="character-arm character-arm-right">
+              <path d="M172 146q24-2 33 21l31 68q8 18-7 27-16 8-25-9l-44-70z" fill="url(#jacketShade)" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+              <path d="m225 231 17 28q8 13-2 21-10 8-19-3l-18-25z" fill="#bdbdbd" stroke="#111" stroke-width="3"/>
+              <path d="M236 266q-1 10-9 12-8 1-12-7" fill="none" stroke="#333" stroke-width="2"/>
+              <path d="m232 261 7 8m-12-4 7 8m-12-4 6 8m-38-94 22 42" fill="none" stroke="#aaa" stroke-width="2" opacity=".5" stroke-linecap="round"/>
+            </g>
+            <g class="character-torso">
+              <path class="character-jacket" d="M88 144q14-15 37-16h12q26 0 39 18l18 107q-25 19-65 19-41 0-68-18l13-90q3-14 14-20z" fill="url(#jacketShade)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+              <path d="m111 132 19 18 20-18 16 13-20 38h-32l-19-38z" fill="#242424" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+              <path d="m119 133 11 17 11-17" fill="none" stroke="#aaa" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="m129 164 2 94" stroke="#777" stroke-width="1.5"/>
+              <path d="m87 181-12 53m99-52 10 53" stroke="#aaa" stroke-width="3" opacity=".75"/>
+              <path d="M96 214h19m30 0h18m-62 24 12-3m50 3-12-3" stroke="#eee" stroke-width="3" stroke-linecap="round"/>
+              <path d="M110 137 130 150l20-13" fill="none" stroke="#111" stroke-width="2"/>
+            </g>
+            <g class="character-head">
+              <path d="M100 77q-12-7-13 6 1 11 13 12m60-18q12-7 13 6-1 11-13 12" fill="url(#skinShade)" stroke="#333" stroke-width="1.8"/>
+              <path d="M112 111h35l2 31q-17 13-36 0z" fill="url(#skinShade)" stroke="#333" stroke-width="1.8"/>
+              <path d="M100 60q4-27 30-29 29 1 33 29l-4 35q-8 24-30 32-22-7-30-31z" fill="url(#skinShade)" stroke="#292929" stroke-width="2"/>
+              <path class="character-hair" d="M91 74Q82 58 91 44L85 31l18 5 4-19 15 13 12-19 11 19 17-12-2 19 19-5-10 18q9 13 3 31l-12-11-7 16-12-15-10 14-12-15-12 14-9-16-10 12z" fill="url(#hairShade)" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="m99 48 10-10 5 7m11-14 8-11 4 15m14 4 12-10-2 16m-58 20 9-10m23 9 8-11m22 13 7-8" fill="none" stroke="#aaa" stroke-width="2" opacity=".7" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="story-copy">
+          <span class="story-kicker" id="storyKicker">الدرس متراكم</span>
+          <strong id="storyText">جلس قدّام الكتب وما عرفش منين يبدا.</strong>
+        </div>
+        <div class="story-progress"><span id="storyProgress"></span></div>
+      </div>
+      <audio id="storyMusic" preload="none">
+        <source src="assets/audio/warm-sunset.ogg" type="audio/ogg">
+      </audio>
+      <button class="story-control" id="storyControl" type="button" aria-label="إيقاف الفيديو">إيقاف</button>
+      <button class="story-sound" id="storySound" type="button" aria-pressed="true">🔊 كتم الموسيقى</button>
+      <span class="story-audio-status" id="storyAudioStatus" role="status" aria-live="polite"></span>
+      <p class="story-music-credit" dir="rtl">
+        الموسيقى: Warm Sunset — MusicLFiles، مستخدمة كما هي بترخيص
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
+        <a href="https://commons.wikimedia.org/wiki/File:Warm_Sunset_by_MusicLFiles.ogg" target="_blank" rel="noopener noreferrer">المصدر</a>
+      </p>
     </div>
   </div>
 
